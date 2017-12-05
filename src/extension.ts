@@ -15,10 +15,16 @@ export function activate(context: vscode.ExtensionContext) {
     // Now provide the implementation of the command with  registerCommand
     // The commandId parameter must match the command field in package.json
     let disposable = vscode.commands.registerCommand('extension.sayHello', () => {
-        // The code you place here will be executed every time your command is executed
-
-        // Display a message box to the user
-        vscode.window.showInformationMessage('Hello World!');
+        var 编辑器 = vscode.window.activeTextEditor;
+        if (!编辑器) {
+            return; // 无打开的编辑器
+        }
+        
+        var 选中部分 = 编辑器.selection;
+        var 文本 = 编辑器.document.getText(选中部分);
+        
+        // 显示信息框
+        vscode.window.showInformationMessage('选中字符数: ' + 文本.length);
     });
 
     context.subscriptions.push(disposable);
